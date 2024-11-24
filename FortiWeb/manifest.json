@@ -1,0 +1,14 @@
+{
+	"extensions": {
+		"Keyfactor.Orchestrators.Extensions.IOrchestratorJobExtension": {
+			"CertStores.FortiWeb.Inventory": {
+				"assemblypath": "FortiWeb.dll",
+				"TypeFullName": "Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs.Inventory"
+			},
+			"CertStores.FortiWeb.Management": {
+				"assemblypath": "FortiWeb.dll",
+				"TypeFullName": "Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs.Management"
+			}
+		}
+	}
+}
