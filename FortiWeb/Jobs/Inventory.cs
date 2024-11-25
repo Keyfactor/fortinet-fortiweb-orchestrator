@@ -82,12 +82,11 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                 _logger.LogTrace($"Inventory Config {JsonConvert.SerializeObject(config)}");
                 _logger.LogTrace(
                     $"Client Machine: {config.CertificateStoreDetails.ClientMachine} ApiKey: {config.ServerPassword}");
-                
-                //Get the list of certificates and Trusted Roots
+
                 var client =
                     new FortiWebClient(config.CertificateStoreDetails.ClientMachine,
                         ServerUserName, ServerPassword, StoreProperties.ApiKey); //Api base URL Plus Key
-                _logger.LogTrace("Inventory Palo Alto Client Created");
+                _logger.LogTrace("Inventory FotiWeb Client Created");
 
                 var cliCertResults = client.GetCertificateInventory(config.CertificateStoreDetails.ClientMachine, 22, ServerUserName, ServerPassword);
 
@@ -97,26 +96,37 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
 
                 var inventoryItems = new List<CurrentInventoryItem>();
 
-                inventoryItems.AddRange(cliCertResults.Select(
-                    c =>
+                var policyList = client.GetPolicyList().Result;
+
+                foreach (var policy in policyList.results)
+                {
+                    //Only inventory bound certificates.  Don't care about certs that are not bound
+                    var matchCount = cliCertResults.FindAll(i => i.Name == policy.certificate);
+                    if (matchCount.Count>0 && !inventoryItems.Exists(c => c.Alias == policy.certificate))
                     {
-                        try
-                        {
-                            _logger.LogTrace(
-                                $"Building Cert List Inventory Item Alias: {c.Name} Pem: {c.CertificatePEM} Private Key: {c.HasPrivateKey}");
-                            
-                            return BuildInventoryItem(c.Name, c.CertificatePEM, c.HasPrivateKey, false);
-                        }
-                        catch(Exception e)
-                        {
-                            _logger.LogWarning(
-                                $"Could not fetch the certificate: {c.Name} associated with CN {c?.CommonName} error {LogHandler.FlattenException(e)}.");
-                            sb.Append(
-                                $"Could not fetch the certificate: {c.Name} associated with CN {c?.CommonName}.{Environment.NewLine}");
-                            warningFlag = true;
-                            return new CurrentInventoryItem();
-                        }
-                    }).Where(acsii => acsii?.Certificates != null).ToList());
+                        inventoryItems.AddRange(cliCertResults.Select(
+                            c =>
+                            {
+                                try
+                                {
+                                    _logger.LogTrace(
+                                        $"Building Cert List Inventory Item Alias: {c.Name} Pem: {c.CertificatePEM} Private Key: {c.HasPrivateKey}");
+
+                                    return BuildInventoryItem(c.Name, c.CertificatePEM, c.HasPrivateKey, false);
+                                }
+                                catch (Exception e)
+                                {
+                                    _logger.LogWarning(
+                                        $"Could not fetch the certificate: {c.Name} associated with CN {c?.CommonName} error {LogHandler.FlattenException(e)}.");
+                                    sb.Append(
+                                        $"Could not fetch the certificate: {c.Name} associated with CN {c?.CommonName}.{Environment.NewLine}");
+                                    warningFlag = true;
+                                    return new CurrentInventoryItem();
+                                }
+                            }).Where(acsii => acsii?.Certificates != null).ToList());
+
+                    }
+                }
 
 
                 _logger.LogTrace("Submitting Inventory To Keyfactor via submitInventory.Invoke");
@@ -163,7 +173,7 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
             _logger.LogTrace($"Serialized Xml Response {resWriter}");
         }
 
-        protected virtual CurrentInventoryItem BuildInventoryItem(string alias, string certPem, bool privateKey,bool trustedRoot)
+        protected virtual CurrentInventoryItem BuildInventoryItem(string alias, string certPem, bool privateKey, bool trustedRoot)
         {
             try
             {
@@ -173,7 +183,7 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                 var acsi = new CurrentInventoryItem
                 {
                     Alias = alias,
-                    Certificates = new[] {certPem},
+                    Certificates = new[] { certPem },
                     ItemStatus = OrchestratorInventoryItemStatus.Unknown,
                     PrivateKeyEntry = privateKey,
                     UseChainLevel = false

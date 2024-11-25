@@ -156,7 +156,7 @@ namespace FortiWebTestConsole
         public static InventoryJobConfiguration GetInventoryJobConfiguration()
         {
             var fileContent = File.ReadAllText("FortiWebInventory.json").Replace("UserNameGoesHere", UserName)
-                .Replace("PasswordGoesHere", Password).Replace("ClientMachineGoesHere", ClientMachine);
+                .Replace("PasswordGoesHere", Password).Replace("ClientMachineGoesHere", ClientMachine).Replace("ApiKeyGoesHere", ApiKey);
             var result =
                 JsonConvert.DeserializeObject<InventoryJobConfiguration>(fileContent);
             return result;

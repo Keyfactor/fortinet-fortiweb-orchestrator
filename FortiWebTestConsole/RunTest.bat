@@ -1,10 +1,6 @@
 @echo off
 
-cd C:\Users\bhill\source\repos\fortinet-fortiweb-orchestrator\FortiWebTestConsole\bin\Debug\netcoreapp3.1
-set FortiWebMachine=20.10.138.208:8443
-set FortiWebUser=bhill
-set FortiWebPassword=dskdks
-set FortiWebApiKey=eyJ1c2VybmFtZSI6
+
 
 set clientmachine=%FortiWebMachine%
 set password=%FortiWebPassword%

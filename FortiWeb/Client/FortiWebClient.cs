@@ -49,6 +49,7 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
             HttpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
             HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", apiKey);
+            ApiKey=apiKey;
         }
 
         private string ApiKey { get; }
