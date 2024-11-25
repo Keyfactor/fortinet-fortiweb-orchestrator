@@ -7,13 +7,13 @@ set password=%FortiWebPassword%
 set user=%FortiWebUser%
 set storepath=/
 
-GOTO:fortiwebinventory
+#GOTO:fortiwebinventory
 
 echo ***********************************
 echo Starting Management Test Cases
 echo ***********************************
 set casename=Management
-set cert=20064
+set cert=20062
 set mgt=add
 set overwrite=true
 

@@ -155,7 +155,7 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                     //1. See if certificate already exists on a binding out there, we will only deal with those in this integration
                     var policyList = client.GetPolicyList();
                     var policy = policyList.Result.results.FindAll(p => p.certificate == alias);
-                    if (policy != null && policy.Count == 1)
+                    if (policy != null && policy.Count >0)
                     {
                         _logger.LogTrace("Either not a duplicate or overwrite was chosen....");
                         _logger.LogTrace($"Found Private Key {config.JobCertificate.PrivateKeyPassword}");
@@ -181,12 +181,18 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                         LogResponse(content);
                         _logger.LogTrace("Finished Logging Import Results...");
 
-                        var res = client.SetCertificateBinding(policy.FirstOrDefault().name, alias).Result;
                     }
                     else
                     {
                         return ReturnJobResult(config, warnings, false, "No existing bindings found with this certificate");
                     }
+
+                    //Re-Bind all the policies for this particular certificate, could be more than 1
+                    foreach (var pol in policy)
+                    {
+                        var res = client.SetCertificateBinding(pol.name, alias).Result;
+                    }
+
                 }
                 if (duplicate && !config.Overwrite)
                 {
