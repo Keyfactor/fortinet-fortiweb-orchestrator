@@ -165,13 +165,6 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
             };
         }
 
-        private void LogResponse<T>(T content)
-        {
-            var resWriter = new StringWriter();
-            var resSerializer = new XmlSerializer(typeof(T));
-            resSerializer.Serialize(resWriter, content);
-            _logger.LogTrace($"Serialized Xml Response {resWriter}");
-        }
 
         protected virtual CurrentInventoryItem BuildInventoryItem(string alias, string certPem, bool privateKey, bool trustedRoot)
         {

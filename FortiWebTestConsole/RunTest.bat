@@ -1,24 +1,24 @@
 @echo off
 
 
-
 set clientmachine=%FortiWebMachine%
 set password=%FortiWebPassword%
 set user=%FortiWebUser%
 set storepath=/
 
-#GOTO:fortiwebinventory
-
 echo ***********************************
 echo Starting Management Test Cases
 echo ***********************************
 set casename=Management
-set cert=20062
+
+GOTO:TC3
+
+set cert=%random%
 set mgt=add
-set overwrite=true
+set overwrite=false
 
 echo ************************************************************************************************************************
-echo TC1 %mgt%.  Should do the %mgt% and add anything in the chain
+echo TC1 %mgt%.  Add No Existing Bindings no overwrite will not do the %mgt% since there is no existing binding for this cert
 echo ************************************************************************************************************************
 echo overwrite: %overwrite%
 echo cert name: %cert%
@@ -29,22 +29,22 @@ FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -use
 set overwrite=true
 
 echo:
-echo *******************************************************************************************************
-echo TC2 %mgt%.  Should do the %mgt% and replace the certificate with a new name
-echo *******************************************************************************************************
+echo ************************************************************************************************************************
+echo TC2 %mgt%.  Add No Existing Bindings w/ overwrite will not do the %mgt% since there is no existing binding for this cert
+echo ************************************************************************************************************************
 echo overwrite: %overwrite%
 echo trusted: %trusted%
 echo cert name: %cert%
 
 FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -apikey=%FortiWebApiKey% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
 
-
-set mgt=remove
+:TC3
+set mgt=add
 set overwrite=true
 
 echo:
 echo **************************************************************************************************************
-echo TC3 Case Try to remove a bound cert, should not be allowed unless you want to delete the binding too not good
+echo TC3 Case Try to replace a bound cert bound to multiple policies, this should work and replace everywhere
 echo **************************************************************************************************************
 echo overwrite: %overwrite%
 set /p cert=Please enter bound cert name:

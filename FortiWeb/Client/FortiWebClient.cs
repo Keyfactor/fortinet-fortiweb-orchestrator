@@ -1,5 +1,4 @@
-﻿extern alias SSHNet;
-// Copyright 2024 Keyfactor
+﻿// Copyright 2024 Keyfactor
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,24 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+extern alias SSHNet;
+
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
 using Keyfactor.Extensions.Orchestrator.FortiWeb.Models.Requests;
 using Keyfactor.Extensions.Orchestrator.FortiWeb.Models.Responses;
 using Keyfactor.Logging;
 using Microsoft.Extensions.Logging;
 using SSHNet::Renci.SshNet;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
 {
@@ -255,7 +252,6 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
                     var key = new ByteArrayContent(keyBytes);
                     var pass = new StringContent(passPhrase);
                     var type = new StringContent("certificate");
-                    //pfxContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-x509-ca-cert");
                     requestContent.Add(cert, "\"certificateFile\"", $"\"{name}.crt\"");
                     requestContent.Add(key, "\"keyFile\"", $"\"{name}.key\"");
                     requestContent.Add(pass, "password");
@@ -267,7 +263,7 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error Occurred in FortiWebClient.GetCertificateList: {e.Message}");
+                _logger.LogError($"Error Occurred in FortiWebClient.ImportCertificate: {e.Message}");
                 throw;
             }
         }
@@ -301,7 +297,27 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error Occurred in FortiWebClient.GetCertificateList: {e.Message}");
+                _logger.LogError($"Error Occurred in FortiWebClient.SetCertificateBinding: {e.Message}");
+                throw;
+            }
+        }
+
+        public async Task<SetBindingsResponse> RemoveCertificate(string certificateName)
+        {
+
+            try
+            {
+                var uri = $@"/api/v2.0/cmdb/system/certificate.local?mkey={certificateName}";
+
+                // Make the PUT request
+                var httpResponse = await GetJsonResponseAsync<SetBindingsResponse>(
+                    await HttpClient.DeleteAsync(uri));
+
+                return httpResponse;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error Occurred in FortiWebClient.RemoveCertificate: {e.Message}");
                 throw;
             }
         }

@@ -193,12 +193,14 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                         var res = client.SetCertificateBinding(pol.name, alias).Result;
                     }
 
+                    //Try to remove the old certificate after the new one is bound to all locations
+                    var delResult = client.RemoveCertificate(config.JobCertificate.Alias + "1").Result;
+
                 }
                 if (duplicate && !config.Overwrite)
                 {
                     return ReturnJobResult(config, warnings, false, "Duplicate detected, must use the overwrite flag.");
                 }
-
 
 
                 return ReturnJobResult(config, warnings, true, "");
@@ -220,9 +222,24 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
         {
             DateTime currentDateTime = DateTime.UtcNow;
             int unixTimestamp = (int)(currentDateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            certName = RightTrimAfter(unixTimestamp + "_" + certName, 31);
+            string timestampString = "_" + unixTimestamp;
+
+            // Check if certName already ends with a timestamp and replace it if true
+            int lastUnderscoreIndex = certName.LastIndexOf('_');
+            if (lastUnderscoreIndex != -1 && int.TryParse(certName.Substring(lastUnderscoreIndex + 1), out _))
+            {
+                certName = certName.Substring(0, lastUnderscoreIndex);
+            }
+
+            // Append the new timestamp at the end
+            certName += timestampString;
+
+            // Trim to ensure the total length does not exceed 31 characters
+            certName = RightTrimAfter(certName, 31);
+
             return certName;
         }
+
 
         private bool CheckForDuplicate(ManagementJobConfiguration config, FortiWebClient client, string certificateName)
         {
