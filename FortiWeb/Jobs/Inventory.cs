@@ -108,7 +108,7 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                     if (certResultsDict.ContainsKey(policy.certificate) && !inventoryItems.Exists(c => c.Alias == policy.certificate))
                     {
                         _logger.LogTrace($"Match(es) found");
-                        inventoryItems.AddRange(cliCertResults.Select(
+                        inventoryItems.AddRange(cliCertResults.Where(c=>c.Name==policy.certificate).Select(
                             c =>
                             {
                                 try
@@ -127,7 +127,7 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                                     warningFlag = true;
                                     return new CurrentInventoryItem();
                                 }
-                            }).Where(acsii => acsii?.Certificates != null).ToList());
+                            }).Where(cer => cer.Certificates!=null).ToList());
 
                     }
                 }
