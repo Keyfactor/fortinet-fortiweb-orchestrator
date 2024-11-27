@@ -27,6 +27,7 @@ using Keyfactor.Extensions.Orchestrator.FortiWeb.Models.Requests;
 using Keyfactor.Extensions.Orchestrator.FortiWeb.Models.Responses;
 using Keyfactor.Logging;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using SSHNet::Renci.SshNet;
 
 namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
@@ -127,7 +128,11 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
                     cmd = sshClient.CreateCommand("show");
                     sshResult = cmd.Execute();
 
+                    _logger.LogTrace("Raw SSH Results" + sshResult);
+
                     cliCertResults = ParseCertificates(sshResult);
+
+                    _logger.LogTrace("Parsed SSH Results: " + JsonConvert.SerializeObject(cliCertResults));
 
                     // Disconnect
                     sshClient.Disconnect();
@@ -231,21 +236,17 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
             return ipAddress; // Return the original string if no port is found
         }
 
-        public async Task<SuccessResponse> ImportCertificate(string name, string passPhrase, byte[] certBytes, byte[] keyBytes,
-            string includeKey, string category, string storePath)
+        public async Task<SuccessResponse> ImportCertificate(string name, string passPhrase, byte[] certBytes, byte[] keyBytes)
         {
 
             try
             {
                 var uri = $@"/api/v2.0/system/certificate.local.import_certificate";
-
-                    // Successfully received a response, deserialize the content
                     var boundary = $"--------------------------{Guid.NewGuid():N}";
                     var requestContent = new MultipartFormDataContent();
                     requestContent.Headers.Remove("Content-Type");
                     requestContent.Headers.TryAddWithoutValidation("Content-Type",
                         $"multipart/form-data; boundary={boundary}");
-                    //Workaround Palo Alto API does not like double quotes around boundary so can't use built in .net client
                     requestContent.GetType().BaseType?.GetField("_boundary", BindingFlags.NonPublic | BindingFlags.Instance)
                         ?.SetValue(requestContent, boundary);
                     var cert = new ByteArrayContent(certBytes);
@@ -286,12 +287,14 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
                 };
 
                 // Serialize the request object to JSON
-                var json = JsonSerializer.Serialize(sbRequest);
+                var json = JsonConvert.SerializeObject(sbRequest);
+                _logger.LogTrace("Logging SetCertificateBinding Request: " + json);
                 var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
                 // Make the PUT request
                 var httpResponse = await GetJsonResponseAsync<SetBindingsResponse>(
                     await HttpClient.PutAsync(uri, httpContent));
+
 
                 return httpResponse;
             }
@@ -329,7 +332,7 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
                 EnsureSuccessfulResponse(response);
                 var stringResponse =
                     await new StreamReader(await response.Content.ReadAsStreamAsync()).ReadToEndAsync();
-                return JsonSerializer.Deserialize<T>(stringResponse);
+                return System.Text.Json.JsonSerializer.Deserialize<T>(stringResponse);
             }
             catch (Exception e)
             {

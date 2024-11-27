@@ -32,9 +32,6 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
 {
     public class Management : IManagementJobExtension
     {
-        private static readonly string certStart = "-----BEGIN CERTIFICATE-----\n";
-        private static readonly string certEnd = "\n-----END CERTIFICATE-----";
-
         private static readonly Func<string, string> Pemify = ss =>
             ss.Length <= 64 ? ss : ss.Substring(0, 64) + "\n" + Pemify(ss.Substring(64));
 
@@ -154,6 +151,7 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                 {
                     //1. See if certificate already exists on a binding out there, we will only deal with those in this integration
                     var policyList = client.GetPolicyList();
+                    _logger.LogTrace($"Policy List: {JsonConvert.SerializeObject(policyList.Result)}");
                     var policy = policyList.Result.results.FindAll(p => p.certificate == alias);
                     if (policy != null && policy.Count >0)
                     {
@@ -169,13 +167,9 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
 
                         var certPem = GetPemFile(config);
                         _logger.LogTrace($"Got certPem {certPem}");
-                        _logger.LogTrace("Found Leaf Certificate");
-                        var type = string.IsNullOrWhiteSpace(config.JobCertificate.PrivateKeyPassword) ? "certificate" : "keypair";
-                        _logger.LogTrace($"Certificate Type of {type}");
                         var importResult = client.ImportCertificate(alias,
                             config.JobCertificate.PrivateKeyPassword,
-                            Encoding.UTF8.GetBytes(certPem[0]), Encoding.UTF8.GetBytes(certPem[1]), "yes", type,
-                            config.CertificateStoreDetails.StorePath);
+                            Encoding.UTF8.GetBytes(certPem[0]), Encoding.UTF8.GetBytes(certPem[1]));
                         _logger.LogTrace("Finished Import About to Log Results...");
                         var content = importResult.Result;
                         LogResponse(content);
@@ -194,7 +188,7 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                     }
 
                     //Try to remove the old certificate after the new one is bound to all locations
-                    var delResult = client.RemoveCertificate(config.JobCertificate.Alias + "1").Result;
+                    var delResult = client.RemoveCertificate(config.JobCertificate.Alias).Result;
 
                 }
                 if (duplicate && !config.Overwrite)
@@ -250,12 +244,15 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                 _logger.MethodEntry();
                 _logger.LogTrace("Getting list to check for duplicates");
                 var certMetaDataList = client.GetCertificateMetaList().Result.results;
-                _logger.LogTrace("Got list to check for duplicates");
-
                 if (certMetaDataList == null)
                     return false;
 
+                _logger.LogTrace($"Cert Meta List: {JsonConvert.SerializeObject(certMetaDataList)}");
+
                 var certificatesResult = certMetaDataList.FindAll(c => c.name == certificateName);
+                
+                _logger.LogTrace($"Duplicate List: {JsonConvert.SerializeObject(certificatesResult)}");
+
                 _logger.LogTrace("Searched for duplicates in the list");
 
                 _logger.MethodExit();

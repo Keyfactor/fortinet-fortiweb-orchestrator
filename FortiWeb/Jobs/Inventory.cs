@@ -14,10 +14,8 @@ extern alias SSHNet;
 // limitations under the License.
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
 using Keyfactor.Extensions.Orchestrator.FortiWeb.Client;
 using Keyfactor.Logging;
 using Keyfactor.Orchestrators.Common.Enums;
@@ -79,9 +77,8 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                 if (!valid) return result;
 
                 _logger.LogTrace("Store Properties are Valid");
-                _logger.LogTrace($"Inventory Config {JsonConvert.SerializeObject(config)}");
                 _logger.LogTrace(
-                    $"Client Machine: {config.CertificateStoreDetails.ClientMachine} ApiKey: {config.ServerPassword}");
+                    $"Client Machine: {config.CertificateStoreDetails.ClientMachine}");
 
                 var client =
                     new FortiWebClient(config.CertificateStoreDetails.ClientMachine,
@@ -89,6 +86,8 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                 _logger.LogTrace("Inventory FotiWeb Client Created");
 
                 var cliCertResults = client.GetCertificateInventory(config.CertificateStoreDetails.ClientMachine, 22, ServerUserName, ServerPassword);
+
+                _logger.LogTrace($"Cli Cert Results Returned {JsonConvert.SerializeObject(cliCertResults)}");
 
                 var warningFlag = false;
                 var sb = new StringBuilder();
@@ -98,12 +97,17 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
 
                 var policyList = client.GetPolicyList().Result;
 
+                _logger.LogTrace($"Policy List Returned Json: {JsonConvert.SerializeObject(policyList)}");
+
+                var certResultsDict = cliCertResults.ToDictionary(c => c.Name);
+
                 foreach (var policy in policyList.results)
                 {
                     //Only inventory bound certificates.  Don't care about certs that are not bound
-                    var matchCount = cliCertResults.FindAll(i => i.Name == policy.certificate);
-                    if (matchCount.Count>0 && !inventoryItems.Exists(c => c.Alias == policy.certificate))
+                    _logger.LogTrace($"Looking for matches where items in cli search match policies from API");
+                    if (certResultsDict.ContainsKey(policy.certificate) && !inventoryItems.Exists(c => c.Alias == policy.certificate))
                     {
+                        _logger.LogTrace($"Match(es) found");
                         inventoryItems.AddRange(cliCertResults.Select(
                             c =>
                             {
@@ -139,7 +143,12 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
             catch (Exception e)
             {
                 _logger.LogError($"PerformInventory Error: {e.Message}");
-                throw;
+                return new JobResult
+                {
+                    Result = OrchestratorJobStatusJobResult.Failure,
+                    JobHistoryId = config.JobHistoryId,
+                    FailureMessage = e.Message
+                };
             }
         }
 
