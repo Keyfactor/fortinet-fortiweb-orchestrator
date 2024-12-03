@@ -53,7 +53,9 @@
               "Type": "Secret",
               "DependsOn": null,
               "DefaultValue": null,
-              "Required": false
+              "Required": false,
+              "IsPAMEligible": true,
+              "Description": "A username for CLI/SSH access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration)."
             },
             {
               "Name": "ServerPassword",
@@ -61,7 +63,9 @@
               "Type": "Secret",
               "DependsOn": null,
               "DefaultValue": null,
-              "Required": false
+              "Required": false,
+              "IsPAMEligible": true,
+              "Description": "A password for CLI/SSH access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration)."
             },
             {
               "Name": "ServerUseSsl",
@@ -69,7 +73,8 @@
               "Type": "Bool",
               "DependsOn": null,
               "DefaultValue": "true",
-              "Required": true
+              "Required": true,
+              "Description": "Should be true, http is not supported."
             },
             {
               "Name": "ApiKey",
@@ -77,7 +82,9 @@
               "Type": "Secret",
               "DependsOn": null,
               "DefaultValue": null,
-              "Required": false
+              "Required": false,
+              "IsPAMEligible": false,
+              "Description": "API Key for access to FortiWeb REST API.  Generate Key on there platform and plug it in here."
             }
           ],
           "EntryParameters": [
