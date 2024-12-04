@@ -67,4 +67,4 @@ This orchestrator automates SSL/TLS certificate management on FortiWeb appliance
 #### SSH/CLI for Inventory
 ```bash
 show full-configuration | grep -A 10 policy
-
+```
