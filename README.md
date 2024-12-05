@@ -51,54 +51,7 @@ The FortiWeb Universal Orchestrator extension is supported by Keyfactor for Keyf
 Before installing the FortiWeb Universal Orchestrator extension, we recommend that you install [kfutil](https://github.com/Keyfactor/kfutil). Kfutil is a command-line tool that simplifies the process of creating store types, installing extensions, and instantiating certificate stores in Keyfactor Command.
 
 
-<details>
-<summary>API User and Profile Setup</summary>
 
-This document outlines the security configuration for the FortiWeb API integration with the Keyfactor Orchestrator. The API profile, `ApiProfile`, has been configured to grant minimal access while ensuring the orchestrator has the necessary permissions to perform its functions.
-
-### API Profile: `ApiProfile`
-
-The `ApiProfile` is configured with the following permissions:
-
-#### Access Control Permissions
-The table below specifies the permissions granted to the API profile for each area of the FortiWeb system:
-
-| **Access Control**                     | **Permissions**  |
-|----------------------------------------|------------------|
-| Maintenance                            | None             |
-| System Configuration                   | Read-Write       |
-| Network Configuration                  | None             |
-| Log & Report                           | None             |
-| Auth Users                             | None             |
-| Server Policy Configuration            | Read-Write       |
-| Web Protection Configuration           | None             |
-| Machine Learning Configuration         | None             |
-| Web Anti-Defacement Management         | None             |
-| Web Vulnerability Scan Configuration   | None             |
-
-#### Description of Permissions
-- **None**: No access to the specified area.
-- **Read-Only**: The user can view configurations but cannot make changes.
-- **Read-Write**: The user can view and modify configurations.
-
-#### Key Permissions for Integration
-1. **System Configuration**: Grants the orchestrator the ability to manage system settings required for certificate deployment and system integration.
-2. **Server Policy Configuration**: Allows the orchestrator to manage server policies, ensuring secure and efficient traffic handling.
-
-### Security Best Practices
-- Limit the use of the `ApiProfile` to only the Keyfactor Orchestrator account.
-- Regularly audit API profile usage and permissions to ensure alignment with the principle of least privilege.
-- Enable logging for API activity to monitor orchestrator interactions with the FortiWeb system.
-
-### Integration Checklist
-1. Create the `ApiProfile` in the FortiWeb system with the permissions listed above.
-2. Assign the profile to the user account that the Keyfactor Orchestrator will use for authentication.
-3. Verify that the orchestrator can access and modify only the required areas (System Configuration and Server Policy Configuration).
-4. Perform a functionality test to ensure the orchestrator can complete all necessary operations without encountering permission errors.
-
-By following this configuration, the Keyfactor Orchestrator will have secure and functional access to integrate with the FortiWeb system effectively.
-
-For additional guidance, consult the FortiWeb and Keyfactor documentation or reach out to your administrator.
 
 
 ## Create the FortiWeb Certificate Store Type
@@ -313,6 +266,81 @@ To use the FortiWeb Universal Orchestrator extension, you **must** create the Fo
 
 
 
+## Client Machine Instructions
+
+ToDo
+
+## Developer Notes
+
+During the inventory process, we encountered a limitation with the REST API: it does not return PEM files as part of the certificate data. To address this, we utilized SSH and the CLI to retrieve the PEM files directly.
+
+### Key Points:
+1. **CLI Dependency**: 
+   - The retrieval process relies heavily on the current structure of the CLI.
+   - If Fortinet updates or changes the CLI commands, this method could break, necessitating updates to the inventory logic.
+
+2. **Scalability Concerns**: 
+   - Testing was conducted with 750 certificates, and no issues were observed.
+   - Inventories larger than 750 certificates have not been tested and may present limitations.
+
+3. **Unreliable Transport**: 
+   - SSH sessions are less stable compared to REST API calls.
+   - Network disruptions or configuration changes could impact the retrieval process.
+
+### Summary:
+While this approach works, it is not ideal and introduces potential risks. Until FortiWeb provides PEM file support via the REST API or a more stable alternative, this method should be considered a temporary solution.
+
+## API User And Profile Setup
+
+<details>
+<summary>API User and Profile Setup</summary>
+
+This document outlines the security configuration for the FortiWeb API integration with the Keyfactor Orchestrator. The API profile, `ApiProfile`, has been configured to grant minimal access while ensuring the orchestrator has the necessary permissions to perform its functions.
+
+### API Profile: `ApiProfile`
+
+The `ApiProfile` is configured with the following permissions:
+
+#### Access Control Permissions
+The table below specifies the permissions granted to the API profile for each area of the FortiWeb system:
+
+| **Access Control**                     | **Permissions**  |
+|----------------------------------------|------------------|
+| Maintenance                            | None             |
+| System Configuration                   | Read-Write       |
+| Network Configuration                  | None             |
+| Log & Report                           | None             |
+| Auth Users                             | None             |
+| Server Policy Configuration            | Read-Write       |
+| Web Protection Configuration           | None             |
+| Machine Learning Configuration         | None             |
+| Web Anti-Defacement Management         | None             |
+| Web Vulnerability Scan Configuration   | None             |
+
+#### Description of Permissions
+- **None**: No access to the specified area.
+- **Read-Only**: The user can view configurations but cannot make changes.
+- **Read-Write**: The user can view and modify configurations.
+
+#### Key Permissions for Integration
+1. **System Configuration**: Grants the orchestrator the ability to manage system settings required for certificate deployment and system integration.
+2. **Server Policy Configuration**: Allows the orchestrator to manage server policies, ensuring secure and efficient traffic handling.
+
+### Security Best Practices
+- Limit the use of the `ApiProfile` to only the Keyfactor Orchestrator account.
+- Regularly audit API profile usage and permissions to ensure alignment with the principle of least privilege.
+- Enable logging for API activity to monitor orchestrator interactions with the FortiWeb system.
+
+### Integration Checklist
+1. Create the `ApiProfile` in the FortiWeb system with the permissions listed above.
+2. Assign the profile to the user account that the Keyfactor Orchestrator will use for authentication.
+3. Verify that the orchestrator can access and modify only the required areas (System Configuration and Server Policy Configuration).
+4. Perform a functionality test to ensure the orchestrator can complete all necessary operations without encountering permission errors.
+
+By following this configuration, the Keyfactor Orchestrator will have secure and functional access to integrate with the FortiWeb system effectively.
+
+For additional guidance, consult the FortiWeb and Keyfactor documentation or reach out to your administrator.
+
 ## **API User Field Descriptions**
 
 ### 1. **`username`**
@@ -358,30 +386,6 @@ To use the FortiWeb Universal Orchestrator extension, you **must** create the Fo
 #### 3. **Audit Access**
 - Regularly review and audit API user activity to ensure security and compliance.
 </details>
-
-## Client Machine Instructions
-
-ToDo
-
-## Developer Notes
-
-During the inventory process, we encountered a limitation with the REST API: it does not return PEM files as part of the certificate data. To address this, we utilized SSH and the CLI to retrieve the PEM files directly.
-
-### Key Points:
-1. **CLI Dependency**: 
-   - The retrieval process relies heavily on the current structure of the CLI.
-   - If Fortinet updates or changes the CLI commands, this method could break, necessitating updates to the inventory logic.
-
-2. **Scalability Concerns**: 
-   - Testing was conducted with 750 certificates, and no issues were observed.
-   - Inventories larger than 750 certificates have not been tested and may present limitations.
-
-3. **Unreliable Transport**: 
-   - SSH sessions are less stable compared to REST API calls.
-   - Network disruptions or configuration changes could impact the retrieval process.
-
-### Summary:
-While this approach works, it is not ideal and introduces potential risks. Until FortiWeb provides PEM file support via the REST API or a more stable alternative, this method should be considered a temporary solution.
 
 ## Test Cases
 
