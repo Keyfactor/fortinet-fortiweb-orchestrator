@@ -32,7 +32,7 @@ namespace FortiWebTestConsole
         public static string CaseName { get; set; }
         public static string CertAlias { get; set; }
         public static string ClientMachine { get; set; }
-        public static string ApiKey { get; set; }
+        public static string ADom { get; set; }
         public static string StorePath { get; set; }
         public static string Overwrite { get; set; }
         public static string ManagementType { get; set; }
@@ -57,7 +57,7 @@ namespace FortiWebTestConsole
                 UserName = arguments["-user"];
                 Password = arguments["-password"];
                 StorePath = arguments["-storepath"];
-                ApiKey = arguments["-apikey"];
+                ADom = arguments["-adom"];
                 ClientMachine = arguments["-clientmachine"];
             }
             else
@@ -71,7 +71,7 @@ namespace FortiWebTestConsole
                 Console.WriteLine("Enter Store Path");
                 StorePath = Console.ReadLine();
                 Console.WriteLine("Enter ApiKey");
-                ApiKey = Console.ReadLine();
+                ADom = Console.ReadLine();
                 Console.WriteLine("Enter ClientMachine");
                 ClientMachine = Console.ReadLine();
             }
@@ -156,7 +156,7 @@ namespace FortiWebTestConsole
         public static InventoryJobConfiguration GetInventoryJobConfiguration()
         {
             var fileContent = File.ReadAllText("FortiWebInventory.json").Replace("UserNameGoesHere", UserName)
-                .Replace("PasswordGoesHere", Password).Replace("ClientMachineGoesHere", ClientMachine).Replace("ApiKeyGoesHere", ApiKey);
+                .Replace("PasswordGoesHere", Password).Replace("ClientMachineGoesHere", ClientMachine).Replace("ADomGoesHere", ADom);
             var result =
                 JsonConvert.DeserializeObject<InventoryJobConfiguration>(fileContent);
             return result;
@@ -174,7 +174,7 @@ namespace FortiWebTestConsole
             
             var fileContent = File.ReadAllText("FortiWebMgmt.json").Replace("UserNameGoesHere", UserName)
                 .Replace("PasswordGoesHere", Password).Replace("TemplateNameGoesHere", StorePath)
-                .Replace("ApiKeyGoesHere", ApiKey).Replace("AliasGoesHere", CertAlias)
+                .Replace("ADomGoesHere", ADom).Replace("AliasGoesHere", CertAlias)
                 .Replace("ClientMachineGoesHere", ClientMachine)
                 .Replace("\"Overwrite\": false",overWriteReplaceString)
                 .Replace("CertificateContentGoesHere", CertificateContent);
