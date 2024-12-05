@@ -82,7 +82,7 @@
               "Type": "String",
               "DependsOn": "",
               "DefaultValue": "root",
-              "Required": false,
+              "Required": true,
               "IsPAMEligible": false,
               "Description": "Specifies the administrative or virtual domain within the FortiWeb system that the API user is targeting."
             }
