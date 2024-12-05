@@ -41,6 +41,9 @@ The FortiWeb Orchestrator Extension is an integration that can replace and inven
 
 This document outlines the security configuration for the FortiWeb API integration with the Keyfactor Orchestrator. The API profile, `ApiProfile`, has been configured to grant minimal access while ensuring the orchestrator has the necessary permissions to perform its functions.
 
+<details>
+<summary>API User and Profile Setup</summary>
+
 ## Compatibility
 
 This integration is compatible with Keyfactor Universal Orchestrator version 10.4 and later.
@@ -357,6 +360,8 @@ For additional guidance, consult the FortiWeb and Keyfactor documentation or rea
 
 #### 3. **Audit Access**
 - Regularly review and audit API user activity to ensure security and compliance.
+</details>
+
 ---
 <details>
 <summary>Test Cases</summary>
