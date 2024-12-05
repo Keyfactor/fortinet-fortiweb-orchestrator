@@ -135,9 +135,12 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                 _logger.LogTrace(
                     $"Credentials JSON: Url: {config.CertificateStoreDetails.ClientMachine} Server UserName: {config.ServerUsername}");
 
+                var apiClient = new FortiWebClient();
+                var apiKey = apiClient.GenerateApiKey(ServerUserName, ServerPassword, StoreProperties.ADom);
+
                 var client =
                     new FortiWebClient(config.CertificateStoreDetails.ClientMachine,
-                        ServerUserName, ServerPassword, StoreProperties.ApiKey); //Api base URL Plus Key
+                        ServerUserName, ServerPassword, apiKey); //Api base URL Plus Key
                 _logger.LogTrace(
                     "FortiWeb Client Created");
 
