@@ -46,3 +46,59 @@ The table below specifies the permissions granted to the API profile for each ar
 By following this configuration, the Keyfactor Orchestrator will have secure and functional access to integrate with the FortiWeb system effectively.
 
 For additional guidance, consult the FortiWeb and Keyfactor documentation or reach out to your administrator.
+
+# API User Field Descriptions for FortiWeb Integration
+
+This document explains the key fields required for API user authentication when integrating with FortiWeb.
+
+---
+
+## **API User ield Descriptions**
+
+### 1. **`username`**
+- **Definition**: The username of the FortiWeb API account.
+- **Purpose**: Identifies the specific user accessing the FortiWeb API.
+- **Details**: This username should belong to a user account configured in FortiWeb with an associated API profile that has the necessary permissions for the integration.
+- **Example**:
+  ```admin```
+
+---
+
+### 2. **`password`**
+- **Definition**: The password associated with the username for authentication.
+- **Purpose**: Used to securely authenticate the API user and ensure access control.
+- **Details**: Ensure the password is strong and stored securely (e.g., encrypted storage or environment variables).
+- **Example**:
+  ```P@ssw0rd123!```
+
+---
+
+### 3. **`vdom` (ADOM Name)**
+- **Definition**: The **Administrative Domain (ADOM)** or **Virtual Domain (VDOM)** name in the FortiWeb system.
+- **Purpose**: Specifies the administrative or virtual domain within the FortiWeb system that the API user is targeting.
+  - **ADOMs (Administrative Domains)**: Used in FortiManager environments to manage multiple instances of FortiWeb. ADOMs isolate administrative control between teams or environments.
+  - **VDOMs (Virtual Domains)**: Virtualization feature in FortiWeb to segment and isolate configurations or policies within a single appliance.
+- **When Required**: If the FortiWeb appliance is configured with multiple ADOMs or VDOMs, this field directs the API user to the correct domain. If no ADOMs/VDOMs are configured, use `"root"`.
+- **Example**:
+  ```Production_ADOM```
+
+---
+
+## **Best Practices**
+
+### 1. **Username & Password Security**
+- Use a dedicated API user account with minimal permissions.
+- Store credentials securely using encrypted storage or environment variables.
+- Regularly rotate passwords and follow your organization's security policies.
+
+### 2. **VDOM/ADOM Selection**
+- Ensure the `vdom` value corresponds to the correct administrative or virtual domain in your FortiWeb system.
+- For single-domain systems, use the default value: `"root"`.
+
+### 3. **Audit Access**
+- Regularly review and audit API user activity to ensure security and compliance.
+
+---
+
+For additional information, refer to the official FortiWeb API documentation or contact your system administrator.
+
