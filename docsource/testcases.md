@@ -1,4 +1,4 @@
-### Test Cases/Screenshots/Results
+## Test Cases/Screenshots/Results
 
 <details>
 <summary>Test Cases</summary>
