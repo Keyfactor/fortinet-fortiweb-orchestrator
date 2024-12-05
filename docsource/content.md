@@ -6,6 +6,34 @@ The FortiWeb Orchestrator Extension is an integration that can replace and inven
 
 ## Requirements
 
+
+## Client Machine Instructions
+
+ToDo
+
+
+## Developer Notes
+
+During the inventory process, we encountered a limitation with the REST API: it does not return PEM files as part of the certificate data. To address this, we utilized SSH and the CLI to retrieve the PEM files directly.
+
+### Key Points:
+1. **CLI Dependency**: 
+   - The retrieval process relies heavily on the current structure of the CLI.
+   - If Fortinet updates or changes the CLI commands, this method could break, necessitating updates to the inventory logic.
+
+2. **Scalability Concerns**: 
+   - Testing was conducted with 750 certificates, and no issues were observed.
+   - Inventories larger than 750 certificates have not been tested and may present limitations.
+
+3. **Unreliable Transport**: 
+   - SSH sessions are less stable compared to REST API calls.
+   - Network disruptions or configuration changes could impact the retrieval process.
+
+### Summary:
+While this approach works, it is not ideal and introduces potential risks. Until FortiWeb provides PEM file support via the REST API or a more stable alternative, this method should be considered a temporary solution.
+
+## API User And Profile Setup
+
 <details>
 <summary>API User and Profile Setup</summary>
 
@@ -106,32 +134,6 @@ This document explains the key fields required for API user authentication when 
 #### 3. **Audit Access**
 - Regularly review and audit API user activity to ensure security and compliance.
 </details>
-
-
-## Client Machine Instructions
-
-ToDo
-
-
-## Developer Notes
-
-During the inventory process, we encountered a limitation with the REST API: it does not return PEM files as part of the certificate data. To address this, we utilized SSH and the CLI to retrieve the PEM files directly.
-
-### Key Points:
-1. **CLI Dependency**: 
-   - The retrieval process relies heavily on the current structure of the CLI.
-   - If Fortinet updates or changes the CLI commands, this method could break, necessitating updates to the inventory logic.
-
-2. **Scalability Concerns**: 
-   - Testing was conducted with 750 certificates, and no issues were observed.
-   - Inventories larger than 750 certificates have not been tested and may present limitations.
-
-3. **Unreliable Transport**: 
-   - SSH sessions are less stable compared to REST API calls.
-   - Network disruptions or configuration changes could impact the retrieval process.
-
-### Summary:
-While this approach works, it is not ideal and introduces potential risks. Until FortiWeb provides PEM file support via the REST API or a more stable alternative, this method should be considered a temporary solution.
 
 ## Test Cases
 
