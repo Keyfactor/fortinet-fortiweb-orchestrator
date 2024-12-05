@@ -89,7 +89,7 @@
           ],
           "EntryParameters": [],
           "ClientMachineDescription": "The Client Machine field should contain the IP or Domain name and Port Needed for REST API Access.  For SSH Access, Port 22 will be used.",
-          "StorePathDescription": "The Store Path field should always be / unless we later determine there are alternate locations needed."
+          "StorePathDescription": "The Store Path field should always be / unless we later determine there are alternate locations needed.",
           "PasswordOptions": {
             "EntrySupported": false,
             "StoreRequired": false,
