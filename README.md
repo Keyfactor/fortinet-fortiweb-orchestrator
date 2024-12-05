@@ -344,16 +344,18 @@ For additional guidance, consult the FortiWeb and Keyfactor documentation or rea
 
 ---
 
-### 1. **Username & Password Security**
+### **Best Practices**
+
+#### 1. **Username & Password Security**
 - Use a dedicated API user account with minimal permissions.
 - Store credentials securely using encrypted storage or environment variables.
 - Regularly rotate passwords and follow your organization's security policies.
 
-### 2. **VDOM/ADOM Selection**
+#### 2. **VDOM/ADOM Selection**
 - Ensure the `vdom` value corresponds to the correct administrative or virtual domain in your FortiWeb system.
 - For single-domain systems, use the default value: `"root"`.
 
-### 3. **Audit Access**
+#### 3. **Audit Access**
 - Regularly review and audit API user activity to ensure security and compliance.
 
 ---
