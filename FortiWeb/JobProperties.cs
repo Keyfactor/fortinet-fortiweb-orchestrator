@@ -19,9 +19,9 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb
 {
     public class JobProperties
     {
-        [JsonProperty("ApiKey")]
+        [JsonProperty("ADom")]
         [DefaultValue("")]
-        public string ApiKey { get; set; }
+        public string ADom { get; set; }
 
 
     }
