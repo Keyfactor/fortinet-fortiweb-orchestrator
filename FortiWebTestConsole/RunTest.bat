@@ -4,7 +4,7 @@ cd C:\Users\bhill\source\repos\fortinet-fortiweb-orchestrator\FortiWebTestConsol
 set FortiWebMachine=11.22.38.208:8443
 set FortiWebUser=dasklfa
 set FortiWebPassword=asdfsa
-set FortiWebApiKey=eyJ
+set ADom=eyJ
 
 set clientmachine=%FortiWebMachine%
 set password=%FortiWebPassword%
@@ -28,7 +28,7 @@ echo ***************************************************************************
 echo overwrite: %overwrite%
 echo cert name: %cert%
 
-FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -apikey=%FortiWebApiKey% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
+FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -adom=%ADom% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
 
 
 set overwrite=true
@@ -41,7 +41,7 @@ echo overwrite: %overwrite%
 echo trusted: %trusted%
 echo cert name: %cert%
 
-FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -apikey=%FortiWebApiKey% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
+FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -adom=%ADom% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
 
 :TC3
 set mgt=add
@@ -55,7 +55,7 @@ echo overwrite: %overwrite%
 set /p cert=Please enter multi policy bound cert name:
 echo cert name: %cert%
 
-FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -apikey=%FortiWebApiKey% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
+FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -adom=%ADom% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
 
 :TC4
 set mgt=add
@@ -69,7 +69,7 @@ echo overwrite: %overwrite%
 set /p cert=Please enter single policy bound cert name:
 echo cert name: %cert%
 
-FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -apikey=%FortiWebApiKey% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
+FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -adom=%ADom% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
 
 
 :TC5
@@ -84,7 +84,7 @@ echo overwrite: %overwrite%
 set /p cert=Please enter single policy bound cert name:
 echo cert name: %cert%
 
-FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -apikey=%FortiWebApiKey% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
+FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -adom=%ADom% -managementtype=%mgt% -certalias=%cert% -overwrite=%overwrite%
 
 :TC6
 echo:
@@ -102,7 +102,7 @@ echo ***************************************************************************
 echo overwrite: %overwrite%
 echo cert name: %cert%
 
-FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -apikey=%FortiWebApiKey% -managementtype=%mgt% -inventorytrusted=%inventorytrusted% -templatestackname=%templatestackname%
+FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -adom=%ADom% -managementtype=%mgt% -inventorytrusted=%inventorytrusted% -templatestackname=%templatestackname%
 
 :TC7
 echo:
@@ -121,6 +121,6 @@ echo ***************************************************************************
 echo overwrite: %overwrite%
 echo cert name: %cert%
 
-FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -apikey=%FortiWebApiKey% -managementtype=%mgt% -inventorytrusted=%inventorytrusted% -templatestackname=%templatestackname%
+FortiWebTestConsole.exe -clientmachine=%clientmachine% -casename=%casename% -user=%user% -password=%password% -storepath=%storepath% -adom=%ADom% -managementtype=%mgt% -inventorytrusted=%inventorytrusted% -templatestackname=%templatestackname%
 
 @pause
