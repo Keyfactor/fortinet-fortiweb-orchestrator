@@ -87,9 +87,9 @@
               "Description": "Specifies the administrative or virtual domain within the FortiWeb system that the API user is targeting."
             }
           ],
-          "EntryParameters": [
-
-          ],
+          "EntryParameters": [],
+          "ClientMachineDescription": "The Client Machine field should contain the IP or Domain name and Port Needed for REST API Access.  For SSH Access, Port 22 will be used.",
+          "StorePathDescription": "The Store Path field should always be / unless we later determine there are alternate locations needed."
           "PasswordOptions": {
             "EntrySupported": false,
             "StoreRequired": false,
