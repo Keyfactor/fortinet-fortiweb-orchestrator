@@ -3,6 +3,9 @@
 ### Overview
 This document outlines the security configuration for the FortiWeb API integration with the Keyfactor Orchestrator. The API profile, `ApiProfile`, has been configured to grant minimal access while ensuring the orchestrator has the necessary permissions to perform its functions.
 
+<details>
+<summary>API User and Profile Setup</summary>
+
 ### API Profile: `ApiProfile`
 
 The `ApiProfile` is configured with the following permissions:
@@ -97,6 +100,8 @@ This document explains the key fields required for API user authentication when 
 
 #### 3. **Audit Access**
 - Regularly review and audit API user activity to ensure security and compliance.
+</details>
+
 ---
 <details>
 <summary>Test Cases</summary>
