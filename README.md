@@ -112,7 +112,7 @@ To use the FortiWeb Universal Orchestrator extension, you **must** create the Fo
     | ServerUsername | Server Username | A username for CLI/SSH and REST API access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). | Secret |  | 🔲 Unchecked |
     | ServerPassword | Server Password | A password for CLI/SSH and REST API access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). | Secret |  | 🔲 Unchecked |
     | ServerUseSsl | Use SSL | Should be true, http is not supported. | Bool | true | ✅ Checked |
-    | ADom | Administrative Domain | Specifies the administrative or virtual domain within the FortiWeb system that the API user is targeting. | String | root | 🔲 Unchecked |
+    | ADom | Administrative Domain | Specifies the administrative or virtual domain within the FortiWeb system that the API user is targeting. | String | root | ✅ Checked |
 
     The Custom Fields tab should look like this:
 
