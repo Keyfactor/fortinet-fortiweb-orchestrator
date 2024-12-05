@@ -9,6 +9,8 @@ The FortiWeb Orchestrator Extension is an integration that can replace and inven
 <details>
 <summary>API User and Profile Setup</summary>
 
+This document outlines the security configuration for the FortiWeb API integration with the Keyfactor Orchestrator. The API profile, `ApiProfile`, has been configured to grant minimal access while ensuring the orchestrator has the necessary permissions to perform its functions.
+
 ### API Profile: `ApiProfile`
 
 The `ApiProfile` is configured with the following permissions:
