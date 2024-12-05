@@ -243,7 +243,7 @@
     "ClientMachine": "ClientMachineGoesHere",
     "StorePath": "TemplateNameGoesHere",
     "StorePassword": "",
-    "Properties": "{\"ServerUsername\":\"UserNameGoesHere\",\"ServerPassword\":\"PasswordGoesHere\",\"ServerUseSsl\":\"true\",\"ApiKey\":\"ApiKeyGoesHere\"}",
+    "Properties": "{\"ServerUsername\":\"UserNameGoesHere\",\"ServerPassword\":\"PasswordGoesHere\",\"ServerUseSsl\":\"true\",\"ADom\":\"ADomGoesHere\"}",
     "Type": 105
   },
   "JobCancelled": false,
