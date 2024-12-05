@@ -119,8 +119,3 @@ This document explains the key fields required for API user authentication when 
 
 </details>
 
-
----
-
-For additional information, refer to the official FortiWeb API documentation or contact your system administrator.
-
