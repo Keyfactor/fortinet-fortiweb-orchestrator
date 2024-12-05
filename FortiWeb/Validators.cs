@@ -25,9 +25,9 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb
         {
             var errors = string.Empty;
 
-            if (string.IsNullOrEmpty(storeProperties?.ApiKey))
+            if (string.IsNullOrEmpty(storeProperties?.ADom))
             {
-                errors += "You need to specify an ApiKey for FortiWeb.";
+                errors += "You need to specify an ADom for FortiWeb.";
             }
 
             var hasErrors = (errors.Length > 0);
