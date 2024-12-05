@@ -233,8 +233,8 @@ To use the FortiWeb Universal Orchestrator extension, you **must** create the Fo
         | --------- | ----------- |
         | Category | Select "FortiWeb" or the customized certificate store name from the previous step. |
         | Container | Optional container to associate certificate store with. |
-        | Client Machine |  |
-        | Store Path |  |
+        | Client Machine | The Client Machine field should contain the IP or Domain name and Port Needed for REST API Access.  For SSH Access, Port 22 will be used. |
+        | Store Path | The Store Path field should always be / unless we later determine there are alternate locations needed. |
         | Orchestrator | Select an approved orchestrator capable of managing `FortiWeb` certificates. Specifically, one with the `FortiWeb` capability. |
         | ServerUsername | A username for CLI/SSH and REST API access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). |
         | ServerPassword | A password for CLI/SSH and REST API access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). |
@@ -277,8 +277,8 @@ To use the FortiWeb Universal Orchestrator extension, you **must** create the Fo
         | --------- | ----------- |
         | Category | Select "FortiWeb" or the customized certificate store name from the previous step. |
         | Container | Optional container to associate certificate store with. |
-        | Client Machine |  |
-        | Store Path |  |
+        | Client Machine | The Client Machine field should contain the IP or Domain name and Port Needed for REST API Access.  For SSH Access, Port 22 will be used. |
+        | Store Path | The Store Path field should always be / unless we later determine there are alternate locations needed. |
         | Orchestrator | Select an approved orchestrator capable of managing `FortiWeb` certificates. Specifically, one with the `FortiWeb` capability. |
         | ServerUsername | A username for CLI/SSH and REST API access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). |
         | ServerPassword | A password for CLI/SSH and REST API access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). |
