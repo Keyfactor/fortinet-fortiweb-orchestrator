@@ -131,7 +131,7 @@ During the inventory process, we encountered a limitation with the REST API: it 
    - Network disruptions or configuration changes could impact the retrieval process.
 
 ### Summary:
-While this approach works, it is not ideal and introduces potential risks. Until Fortinet provides PEM file support via the REST API or a more stable alternative, this method should be considered a temporary solution.
+While this approach works, it is not ideal and introduces potential risks. Until FortiWeb provides PEM file support via the REST API or a more stable alternative, this method should be considered a temporary solution.
 
 ## Test Cases
 
