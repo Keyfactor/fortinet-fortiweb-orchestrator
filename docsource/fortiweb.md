@@ -102,7 +102,7 @@ This document explains the key fields required for API user authentication when 
 - Regularly review and audit API user activity to ensure security and compliance.
 </details>
 
-## Test Cases/Screenshots/Results
+### Test Cases/Screenshots/Results
 
 <details>
 <summary>Test Cases</summary>
