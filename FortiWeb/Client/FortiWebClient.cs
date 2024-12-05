@@ -36,6 +36,26 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
     {
         private readonly ILogger _logger;
 
+        public string GenerateApiKey(string username, string password, string vdom)
+        {
+            // Create the object
+            var data = new
+            {
+                username = username,
+                password = password,
+                vdom = vdom
+            };
+
+            // Convert the object to a JSON string
+            string jsonString = JsonConvert.SerializeObject(data);
+
+            // Convert the JSON string to a byte array
+            byte[] byteArray = Encoding.UTF8.GetBytes(jsonString);
+
+            // Base64 encode the byte array
+            return Convert.ToBase64String(byteArray);
+        }
+
         public FortiWebClient(string url, string userName, string password, string apiKey)
         {
             _logger = LogHandler.GetClassLogger<FortiWebClient>();
@@ -48,6 +68,12 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Client
             HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
             HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", apiKey);
             ApiKey=apiKey;
+        }
+
+
+        public FortiWebClient()
+        {
+            _logger = LogHandler.GetClassLogger<FortiWebClient>();
         }
 
         private string ApiKey { get; }
