@@ -116,10 +116,10 @@ To use the FortiWeb Universal Orchestrator extension, you **must** create the Fo
 
     | Name | Display Name | Description | Type | Default Value/Options | Required |
     | ---- | ------------ | ---- | --------------------- | -------- | ----------- |
-    | ServerUsername | Server Username | A username for CLI/SSH access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). | Secret |  | 🔲 Unchecked |
-    | ServerPassword | Server Password | A password for CLI/SSH access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). | Secret |  | 🔲 Unchecked |
+    | ServerUsername | Server Username | A username for CLI/SSH and REST API access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). | Secret |  | 🔲 Unchecked |
+    | ServerPassword | Server Password | A password for CLI/SSH and REST API access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). | Secret |  | 🔲 Unchecked |
     | ServerUseSsl | Use SSL | Should be true, http is not supported. | Bool | true | ✅ Checked |
-    | ApiKey | Api Key | API Key for access to FortiWeb REST API.  Generate Key on there platform and plug it in here. | Secret |  | 🔲 Unchecked |
+    | ADom | Administrative Domain | Specifies the administrative or virtual domain within the FortiWeb system that the API user is targeting. | String | root | 🔲 Unchecked |
 
     The Custom Fields tab should look like this:
 
@@ -196,10 +196,10 @@ To use the FortiWeb Universal Orchestrator extension, you **must** create the Fo
         | Client Machine |  |
         | Store Path |  |
         | Orchestrator | Select an approved orchestrator capable of managing `FortiWeb` certificates. Specifically, one with the `FortiWeb` capability. |
-        | ServerUsername | A username for CLI/SSH access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). |
-        | ServerPassword | A password for CLI/SSH access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). |
+        | ServerUsername | A username for CLI/SSH and REST API access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). |
+        | ServerPassword | A password for CLI/SSH and REST API access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). |
         | ServerUseSsl | Should be true, http is not supported. |
-        | ApiKey | API Key for access to FortiWeb REST API.  Generate Key on there platform and plug it in here. |
+        | ADom | Specifies the administrative or virtual domain within the FortiWeb system that the API user is targeting. |
 
 
         
@@ -209,8 +209,8 @@ To use the FortiWeb Universal Orchestrator extension, you **must** create the Fo
         If a PAM provider was installed _on the Universal Orchestrator_ in the [Installation](#Installation) section, the following parameters can be configured for retrieval _on the Universal Orchestrator_.
         | Attribute | Description |
         | --------- | ----------- |
-        | ServerUsername | A username for CLI/SSH access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). |
-        | ServerPassword | A password for CLI/SSH access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). |
+        | ServerUsername | A username for CLI/SSH and REST API access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). |
+        | ServerPassword | A password for CLI/SSH and REST API access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). |
 
 
         Please refer to the **Universal Orchestrator (remote)** usage section ([PAM providers on the Keyfactor Integration Catalog](https://keyfactor.github.io/integrations-catalog/content/pam)) for your selected PAM provider for instructions on how to load attributes orchestrator-side.
@@ -240,10 +240,10 @@ To use the FortiWeb Universal Orchestrator extension, you **must** create the Fo
         | Client Machine |  |
         | Store Path |  |
         | Orchestrator | Select an approved orchestrator capable of managing `FortiWeb` certificates. Specifically, one with the `FortiWeb` capability. |
-        | ServerUsername | A username for CLI/SSH access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). |
-        | ServerPassword | A password for CLI/SSH access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). |
+        | ServerUsername | A username for CLI/SSH and REST API access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). |
+        | ServerPassword | A password for CLI/SSH and REST API access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). |
         | ServerUseSsl | Should be true, http is not supported. |
-        | ApiKey | API Key for access to FortiWeb REST API.  Generate Key on there platform and plug it in here. |
+        | ADom | Specifies the administrative or virtual domain within the FortiWeb system that the API user is targeting. |
 
 
         
@@ -253,8 +253,8 @@ To use the FortiWeb Universal Orchestrator extension, you **must** create the Fo
         If a PAM provider was installed _on the Universal Orchestrator_ in the [Installation](#Installation) section, the following parameters can be configured for retrieval _on the Universal Orchestrator_.
         | Attribute | Description |
         | --------- | ----------- |
-        | ServerUsername | A username for CLI/SSH access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). |
-        | ServerPassword | A password for CLI/SSH access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). |
+        | ServerUsername | A username for CLI/SSH and REST API access.  Used for inventory. (or valid PAM key if the username is stored in a KF Command configured PAM integration). |
+        | ServerPassword | A password for CLI/SSH and REST API access.  Used for inventory.(or valid PAM key if the password is stored in a KF Command configured PAM integration). |
 
 
         > Any secret can be rendered by a PAM provider _installed on the Keyfactor Command server_. The above parameters are specific to attributes that can be fetched by an installed PAM provider running on the Universal Orchestrator server itself. 
