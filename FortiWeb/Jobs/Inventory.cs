@@ -80,9 +80,12 @@ namespace Keyfactor.Extensions.Orchestrator.FortiWeb.Jobs
                 _logger.LogTrace(
                     $"Client Machine: {config.CertificateStoreDetails.ClientMachine}");
 
+                var apiClient = new FortiWebClient();
+                var apiKey = apiClient.GenerateApiKey(ServerUserName, ServerPassword, StoreProperties.ADom);
+
                 var client =
                     new FortiWebClient(config.CertificateStoreDetails.ClientMachine,
-                        ServerUserName, ServerPassword, StoreProperties.ApiKey); //Api base URL Plus Key
+                        ServerUserName, ServerPassword, apiKey); //Api base URL Plus Key
                 _logger.LogTrace("Inventory FotiWeb Client Created");
 
                 var cliCertResults = client.GetCertificateInventory(config.CertificateStoreDetails.ClientMachine, 22, ServerUserName, ServerPassword);
