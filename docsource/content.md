@@ -9,8 +9,7 @@ The FortiWeb Orchestrator Extension is an integration that can replace and inven
 
 ## Client Machine Instructions
 
-ToDo
-
+The Client Machine field should contain the IP or Domain name and Port Needed for REST API Access.  For SSH Access, Port 22 will be used.
 
 ## Developer Notes
 
