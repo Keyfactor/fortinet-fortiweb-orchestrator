@@ -33,7 +33,7 @@
 
 The FortiWeb Orchestrator Extension is an integration that can replace and inventory certificates on the device that are bound to a Vitrual Server via Policy.  The certificate store types that can be managed in the current version are: 
 
-* FortiWeb
+* FortiWeb - See Test Cases For Specific Use Cases that are supported.
 
 
 
